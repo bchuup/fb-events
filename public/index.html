@@ -27,7 +27,27 @@
     <title>React App</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '2594993770567988',
+          autoLogAppEvents: true,
+          xfbml: true,
+          version: 'v4.0'
+        });
+        FB.login(function (response) {
+          if (response.authResponse) {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+              console.log('Good to see you, ' + response.name + '.');
+            });
+          } else {
+            console.log('User cancelled login or did not fully authorize.');
+          }
+        });
+      };
+    </script>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <div id="root"></div>
     <!--
       This HTML file is a template.
