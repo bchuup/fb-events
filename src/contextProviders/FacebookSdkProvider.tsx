@@ -17,26 +17,23 @@ declare global {
 const FacebookSdkProvider: FunctionComponent = ({ children }) => {
   useEffect(() => {
     (async () => {
-      console.log('process.env.REACT_APP_FB_APP_ID', process.env.REACT_APP_FB_APP_ID);
-      if (process.env.REACT_APP_FB_APP_ID) {
-        window.FB.init({
-          appId: process.env.REACT_APP_FB_APP_ID,
-          autoLogAppEvents: true,
-          xfbml: true,
-          version: 'v4.0'
-        });
-        window.FB.login(function (response: any) {
-          if (response.authResponse) {
-            console.log('Welcome!  Fetching your information.... ');
-            console.log('authResponse', response.authResponse);
-            window.FB.getLoginStatus(function (response: any) {
-              console.log('getLoginStatus', response);
-            });
-          } else {
-            console.log('User cancelled login or did not fully authorize.');
-          }
-        });
-      }
+      window.FB.init({
+        appId: process.env.REACT_APP_FB_APP_ID,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v4.0'
+      });
+      window.FB.login(function (response: any) {
+        if (response.authResponse) {
+          console.log('Welcome!  Fetching your information.... ');
+          console.log('authResponse', response.authResponse);
+          window.FB.getLoginStatus(function (response: any) {
+            console.log('getLoginStatus', response);
+          });
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+        }
+      });
     })();
   });
   return (
