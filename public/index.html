@@ -27,7 +27,7 @@
     <title>React App</title>
   </head>
   <body>
-    <script>
+    <!-- <script>
       window.fbAsyncInit = function () {
         FB.init({
           appId: '2594993770567988',
@@ -39,6 +39,7 @@
           if (response.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
             FB.api('/me', function (response) {
+              console.log('response', response);
               console.log('Good to see you, ' + response.name + '.');
             });
           } else {
@@ -46,7 +47,7 @@
           }
         });
       };
-    </script>
+    </script> -->
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <div id="root"></div>
     <!--
