@@ -1,41 +1,29 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useEffect, FunctionComponent, useState } from 'react';
 
-const MyFacebookContext = React.createContext<any>(null);
+export const MyFacebookContext = React.createContext<{ 
+  statusResponse: fb.StatusResponse | undefined,
+  setStatusResponse: React.Dispatch<React.SetStateAction<fb.StatusResponse | undefined>>
+}>({ 
+  statusResponse: undefined,
+  setStatusResponse: () => null
+});
 
 declare global {
   interface Window { fbAsyncInit: any, FB: fb.FacebookStatic }
 }
 
 const FacebookSdkProvider: FunctionComponent = ({ children }) => {
+  const [statusResponse, setStatusResponse] = useState<fb.StatusResponse | undefined>(undefined)
 
   useEffect(() => {
-    window.FB.getLoginStatus((response: fb.StatusResponse) => {
-      console.log('response', response);
+    FB.getLoginStatus((response: fb.StatusResponse) => {
+      if (response.status === 'connected') {
+        setStatusResponse(response);
+      }
     });
-    // const fbAsyncInit = async () => {
-    //   window.FB.init({
-    //     appId: process.env.REACT_APP_FB_APP_ID || '',
-    //     autoLogAppEvents: true,
-    //     version: 'v4.0',
-    //   })
-      // window.FB.login(function (response: fb.StatusResponse) {
-      //   if (response.authResponse) {
-      //     console.log('Welcome!  Fetching your information.... ');
-      //     console.log('authResponse', response.authResponse);
-      //     window.FB.getLoginStatus(function (response: fb.StatusResponse) {
-      //       console.log('getLoginStatus', response);
-      //     });
-      //   } else {
-      //     console.log('User cancelled login or did not fully authorize.');
-      //   }
-      // });
-    // }
-    // fbAsyncInit().then(() => {
-    //   console.log(window);
-    // })
-  });
+  }, []);
   return (
-    <MyFacebookContext.Provider value={{test: 'hello'}}>
+    <MyFacebookContext.Provider value={{ statusResponse, setStatusResponse }}>
       {children}
     </MyFacebookContext.Provider>
   )
