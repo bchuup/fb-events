@@ -1,10 +1,16 @@
 import React, { FunctionComponent, useEffect, useContext } from 'react';
 import { MyFacebookContext } from '../../contextProviders/FacebookSdkProvider';
 import { useHistory } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
+import styled from 'styled-components';
 
 declare global {
   interface Window { checkLoginState: () => void }
 }
+
+const LoginContainer = styled(Grid)`
+  height: 100vh;
+`
 
 const Login: FunctionComponent = () => {
   const { statusResponse, setStatusResponse, getIsAuthenticated } = useContext(MyFacebookContext);
@@ -27,7 +33,11 @@ const Login: FunctionComponent = () => {
   }, [statusResponse]);
 
   return (
-    <div>
+    <LoginContainer 
+      container={true} 
+      alignItems="center" 
+      justify="center"
+    >
       <div
         id="fb-login-button"
         className="fb-login-button" 
@@ -36,7 +46,7 @@ const Login: FunctionComponent = () => {
         data-use-continue-as="false" 
         data-onlogin="checkLoginState()"
       />  
-    </div>
+    </LoginContainer>
   )
 };
 
