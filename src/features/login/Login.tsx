@@ -13,7 +13,7 @@ const LoginContainer = styled(Grid)`
 `
 
 const Login: FunctionComponent = () => {
-  const { statusResponse, setStatusResponse, getIsAuthenticated } = useContext(MyFacebookContext);
+  const { setStatusResponse, getIsAuthenticated } = useContext(MyFacebookContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -25,13 +25,12 @@ const Login: FunctionComponent = () => {
         setStatusResponse(response);
       });
     }
-  }, []);
+  });
   useEffect(() => {
     if (getIsAuthenticated()) {
       return history.push('/');
     }
-  }, [statusResponse]);
-
+  });
   return (
     <LoginContainer 
       container={true} 
