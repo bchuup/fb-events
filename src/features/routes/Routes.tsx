@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, ReactNode, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, ReactNode} from 'react';
 import { MyFacebookContext } from '../../contextProviders/FacebookSdkProvider';
 import Login from '../login/Login';
 import {
@@ -6,7 +6,8 @@ import {
   Switch,
   RouteComponentProps,
   RouteProps,
-} from 'react-router';
+  Redirect,
+} from 'react-router-dom';
 import Home from '../home/Home';
 
 type ProtectedRouteProps<P> = RouteProps &
@@ -18,19 +19,12 @@ export const ProtectedRoute = ({
   component: Component,
   ...rest
 }: ProtectedRouteProps<any>) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { statusResponse } = useContext(MyFacebookContext);
-  useEffect(() => {
-    const isAuth = statusResponse 
-      ? statusResponse.status === 'connected'
-      : false; 
-    setIsAuthenticated(isAuth);
-  }, [Component, statusResponse])
+  const { getIsAuthenticated } = useContext(MyFacebookContext);
 
   const render = (props: RouteComponentProps<any>): ReactNode => {
-    return isAuthenticated
+    return getIsAuthenticated()
       ? <Component {...props} />
-      : <Login />
+      : <Redirect to="/login" />
   };
 
   return <Route {...rest} render={render} />;
@@ -39,7 +33,8 @@ export const ProtectedRoute = ({
 const Routes: FunctionComponent = () => {
   return (
     <Switch>
-      <ProtectedRoute path="/" component={Home} />
+      <ProtectedRoute path="/" exact={true} component={Home} />
+      <Route path="/login" exact={true} component={Login} />
     </Switch>
   );
 }

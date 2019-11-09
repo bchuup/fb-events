@@ -3,9 +3,11 @@ import React, { useEffect, FunctionComponent, useState } from 'react';
 export const MyFacebookContext = React.createContext<{ 
   statusResponse: fb.StatusResponse | undefined,
   setStatusResponse: React.Dispatch<React.SetStateAction<fb.StatusResponse | undefined>>
+  getIsAuthenticated: () => boolean;
 }>({ 
   statusResponse: undefined,
-  setStatusResponse: () => null
+  setStatusResponse: () => null,
+  getIsAuthenticated: () => false,
 });
 
 declare global {
@@ -22,8 +24,13 @@ const FacebookSdkProvider: FunctionComponent = ({ children }) => {
       }
     });
   }, []);
+
+  const getIsAuthenticated = () => {
+    return (statusResponse && (statusResponse.status === 'connected')) || false;
+  }
+
   return (
-    <MyFacebookContext.Provider value={{ statusResponse, setStatusResponse }}>
+    <MyFacebookContext.Provider value={{ statusResponse, setStatusResponse, getIsAuthenticated }}>
       {children}
     </MyFacebookContext.Provider>
   )
