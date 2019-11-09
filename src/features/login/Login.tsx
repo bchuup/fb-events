@@ -11,7 +11,7 @@ const Login: FunctionComponent = () => {
   const history = useHistory();
 
   useEffect(() => {
-    FB.XFBML.parse(document.getElementById('fb-login-button'));
+    FB.XFBML.parse();
   }, []);
   useEffect(() => {
     window.checkLoginState = () => {
@@ -33,7 +33,6 @@ const Login: FunctionComponent = () => {
         className="fb-login-button" 
         data-size="large" 
         data-button-type="continue_with" 
-        data-auto-logout-link="false" 
         data-use-continue-as="false" 
         data-onlogin="checkLoginState()"
       />  
