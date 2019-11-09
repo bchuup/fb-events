@@ -5,15 +5,18 @@ import {
 } from "react-router-dom";
 import Routes from './features/routes/Routes'
 import FacebookSdkProvider from './contextProviders/FacebookSdkProvider';
+import ThemeProvider from './contextProviders/ThemeProvider';
 
 
 function App() {
   return (
     <div className="App">
       <FacebookSdkProvider>
-        <Router>
-          <Routes />
-        </Router>
+        <ThemeProvider>
+          <Router>
+            <Routes />
+          </Router>
+        </ThemeProvider>
       </FacebookSdkProvider>
     </div>
   );
