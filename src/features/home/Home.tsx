@@ -1,5 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
-import { MyFacebookContext } from '../../contextProviders/FacebookSdkProvider';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import MainLayout from '../../layouts/MainLayout';
 
 interface BasicInfo {

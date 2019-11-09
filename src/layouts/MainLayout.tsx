@@ -1,6 +1,5 @@
 import React, { FunctionComponent, Component } from 'react';
 import styled from 'styled-components';
-import { AppBar, Grid, Toolbar } from '@material-ui/core';
 import LogoutButton from '../features/auth/LogoutButton';
 
 const LayoutContainer = styled.div`
