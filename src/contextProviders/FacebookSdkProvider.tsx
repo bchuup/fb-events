@@ -27,11 +27,6 @@ const FacebookSdkProvider: FunctionComponent = ({ children }) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log('parsing');
-  //   FB.XFBML.parse(document.getElementById('fb-login-button'));
-  // }, []);
-
   const getIsAuthenticated = () => {
     return (statusResponse && (statusResponse.status === 'connected')) || false;
   }
@@ -43,7 +38,13 @@ const FacebookSdkProvider: FunctionComponent = ({ children }) => {
   }
 
   return (
-    <MyFacebookContext.Provider value={{ statusResponse, setStatusResponse, getIsAuthenticated, logout }}>
+    <MyFacebookContext.Provider 
+      value={{ 
+        statusResponse, 
+        setStatusResponse, 
+        getIsAuthenticated, 
+        logout 
+      }}>
       {children}
     </MyFacebookContext.Provider>
   )
